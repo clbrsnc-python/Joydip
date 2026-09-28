@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Review: Concept Mapping</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 { margin-top: 0; margin-bottom: 5px; color: #2c3e50; }
+        .subtitle {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        /* CSV Upload Section */
+        .csv-section {
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px dashed #bdc3c7;
+            margin-bottom: 20px;
+        }
+        .csv-instructions {
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+
+        /* Mobile-friendly stacked inputs */
+        .paper-entry {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: #fdfdfd;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Color Pickers Panel */
+        .settings-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .btn-add { background-color: #27ae60; align-self: flex-start; }
+        .btn-add:hover { background-color: #219653; }
+        .btn-remove { background-color: #e74c3c; align-self: flex-end; padding: 8px 15px; }
+        .btn-submit { background-color: #2980b9; width: 100%; font-size: 16px; margin-top: 5px; padding: 15px;}
+        .btn-submit:hover { background-color: #2471a3; }
+        
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        
+        /* Legend */
+        .legend { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 15px; font-size: 13px; }
+        .legend span { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        
+        #graph-container {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #ffffff;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        svg { width: 100%; height: 100%; cursor: grab; }
+        svg:active { cursor: grabbing; }
+        .node-label { font-size: 12px; font-family: sans-serif; pointer-events: none; text-shadow: 1px 1px 2px white, -1px -1px 2px white; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Literature Review: Concept Mapping</h2>
+        <div class="subtitle">
+            An interactive tool for mapping specific academic papers to visual map for structuring research knowledge.<br>
+            Designed and Developed by <em>CENTRAL LIBRARY, BRSC</em>
+        </div>
+        
+        <div class="csv-section">
+            <label for="csvFileInput" style="font-weight: bold; color: #2c3e50;">Bulk Upload Authors & Keywords (CSV):</label>
+            <input type="file" id="csvFileInput" accept=".csv" style="margin-left: 10px;">
+            <div class="csv-instructions">
+                <strong>Required CSV Data Structure:</strong><br>
+                Your file should contain two columns (no header row needed).<br>
+                • <strong>Column 1:</strong> Author or Paper Title (e.g., <em>Levitsky 2018</em>)<br>
+                • <strong>Column 2:</strong> Keywords separated by commas. (If using multiple keywords, wrap the entire second column in quotation marks: e.g., <em>"Democracy, Institutions, Voting"</em>)
+            </div>
+        </div>
+
+        <div id="paperList">
+            <!-- Empty by default, populated manually or via CSV -->
+        </div>
+
+        <button type="button" class="btn btn-add" id="addBtn">+ Add Paper Manually</button>
+
+        <div class="settings-panel">
+            <div class="color-picker">
+                <label for="colorAuthor">Author Node:</label>
+                <input type="color" id="colorAuthor" value="#34495e">
+            </div>
+            <div class="color-picker">
+                <label for="colorKeyword">Keyword Node:</label>
+                <input type="color" id="colorKeyword" value="#3498db">
+            </div>
+            <div class="color-picker">
+                <label for="colorGlobal">Global Concept Node:</label>
+                <input type="color" id="colorGlobal" value="#e67e22">
+            </div>
+            <div class="color-picker">
+                <label for="colorLink">Vertices / Links:</label>
+                <input type="color" id="colorLink" value="#bdc3c7">
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-submit" id="submitBtn">Submit and Map Your Topic</button>
+
+        <div id="status">Waiting for input...</div>
+
+        <div class="legend">
+            <span><span class="dot" id="legendAuthor" style="background:#34495e;"></span> Authors / Papers</span>
+            <span><span class="dot" id="legendKeyword" style="background:#3498db;"></span> Your Keywords</span>
+            <span><span class="dot" id="legendGlobal" style="background:#e67e22;"></span> Global Database Concepts</span>
+        </div>
+    </div>
+
+    <div id="graph-container"></div>
+
+    <script>
+        // Event Listeners
+        document.getElementById('addBtn').addEventListener('click', addPaperRow);
+        document.getElementById('submitBtn').addEventListener('click', processAndMap);
+        
+        // Remove button delegation
+        document.getElementById('paperList').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('btn-remove')) {
+                e.target.parentElement.remove();
+            }
+        });
+
+        // Add a single blank row
+        function addPaperRow() {
+            const row = document.createElement('div');
+            row.className = 'paper-entry';
+            row.innerHTML = `
+                <input type="text" class="author-input" placeholder="Author/Title (e.g. Levitsky 2018)">
+                <input type="text" class="keyword-input" placeholder="Keywords (comma separated, e.g. Democracy, Institutions)">
+                <button type="button" class="btn btn-remove">Remove</button>
+            `;
+            document.getElementById('paperList').appendChild(row);
+        }
+
+        // Initialize with one blank row
+        addPaperRow();
+
+        // CSV Upload Logic
+        document.getElementById('csvFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const text = event.target.result;
+                parseCSV(text);
+                // Clear the file input so the same file can be uploaded again if needed
+                e.target.value = '';
+            };
+            reader.readAsText(file);
+        });
+
+        function parseCSV(text) {
+            const rows = text.trim().split('\n');
+            const paperList = document.getElementById('paperList');
+            
+            // Remove the default blank row if it's currently empty to keep things tidy
+            if (paperList.children.length === 1) {
+                const firstRowAuthor = paperList.querySelector('.author-input').value;
+                const firstRowKeyword = paperList.querySelector('.keyword-input').value;
+                if (!firstRowAuthor && !firstRowKeyword) {
+                    paperList.innerHTML = '';
+                }
+            }
+
+            rows.forEach(row => {
+                if(row.trim() === '') return;
+                
+                // Custom CSV parser to safely handle quotation marks around keywords
+                let cols = [];
+                let inQuotes = false;
+                let current = '';
+                for(let i = 0; i < row.length; i++) {
+                    let char = row[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        cols.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                cols.push(current.trim());
+
+                if (cols.length >= 2) {
+                    // Remove leading/trailing quotes if they exist
+                    let author = cols[0].replace(/^"|"$/g, '').trim();
+                    let keywords = cols.slice(1).join(',').replace(/^"|"$/g, '').trim(); 
+                    
+                    if (author && keywords) {
+                        const newRow = document.createElement('div');
+                        newRow.className = 'paper-entry';
+                        newRow.innerHTML = `
+                            <input type="text" class="author-input" value="${author}">
+                            <input type="text" class="keyword-input" value="${keywords}">
+                            <button type="button" class="btn btn-remove">Remove</button>
+                        `;
+                        paperList.appendChild(newRow);
+                    }
+                }
+            });
+        }
+
+        // Main Mapping Logic
+        async function processAndMap() {
+            const rows = document.querySelectorAll('.paper-entry');
+            const statusDiv = document.getElementById('status');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Get chosen colors
+            const cAuthor = document.getElementById('colorAuthor').value;
+            const cKeyword = document.getElementById('colorKeyword').value;
+            const cGlobal = document.getElementById('colorGlobal').value;
+            const cLink = document.getElementById('colorLink').value;
+
+            // Update Legend Colors dynamically
+            document.getElementById('legendAuthor').style.background = cAuthor;
+            document.getElementById('legendKeyword').style.background = cKeyword;
+            document.getElementById('legendGlobal').style.background = cGlobal;
+            
+            let nodesMap = new Map();
+            let links = [];
+            let uniqueKeywordsToFetch = new Set();
+
+            // Parse user inputs
+            rows.forEach(row => {
+                const author = row.querySelector('.author-input').value.trim();
+                const keywordsRaw = row.querySelector('.keyword-input').value.trim();
+                
+                if (author && keywordsRaw) {
+                    if (!nodesMap.has(author)) {
+                        nodesMap.set(author, { id: author, group: 'author', radius: 10, color: cAuthor });
+                    }
+
+                    const keywords = keywordsRaw.split(',').map(k => k.trim()).filter(k => k);
+                    keywords.forEach(kw => {
+                        let kwId = kw.toLowerCase(); 
+                        if (!nodesMap.has(kwId)) {
+                            nodesMap.set(kwId, { id: kwId, label: kw, group: 'keyword', radius: 15, color: cKeyword });
+                            uniqueKeywordsToFetch.add(kw);
+                        }
+                        links.push({ source: author, target: kwId, type: 'local', color: cLink });
+                    });
+                }
+            });
+
+            if (nodesMap.size === 0) {
+                statusDiv.innerText = "Please enter at least one paper and keyword.";
+                return;
+            }
+
+            // Fetch from Global Database
+            submitBtn.disabled = true;
+            statusDiv.innerHTML = "<em>Querying Global Indexing System... Please wait.</em>";
+            
+            for (let kw of uniqueKeywordsToFetch) {
+                try {
+                    const response = await fetch(`https://api.openalex.org/concepts?search=${encodeURIComponent(kw)}`);
+                    const data = await response.json();
+                    
+                    if (data.results && data.results.length > 0) {
+                        const topConcept = data.results[0];
+                        const related = topConcept.related_concepts.slice(0, 2);
+                        
+                        related.forEach(rel => {
+                            let relId = rel.display_name.toLowerCase();
+                            if (!nodesMap.has(relId)) {
+                                nodesMap.set(relId, { id: relId, label: rel.display_name, group: 'global', radius: 12, color: cGlobal });
+                            }
+                            links.push({ source: kw.toLowerCase(), target: relId, type: 'global', color: cLink });
+                        });
+                    }
+                } catch (e) {
+                    console.error("Error fetching data for keyword:", kw, e);
+                }
+            }
+
+            statusDiv.innerText = "Map generated successfully!";
+            submitBtn.disabled = false;
+
+            // Render Graph
+            const nodesArray = Array.from(nodesMap.values());
+            drawGraph(nodesArray, links);
+        }
+
+        function drawGraph(nodes, links) {
+            const container = document.getElementById('graph-container');
+            container.innerHTML = ''; 
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const svg = d3.select("#graph-container").append("svg")
+                .attr("viewBox", [0, 0, width, height]);
+
+            const g = svg.append("g");
+            svg.call(d3.zoom()
+                .extent([[0, 0], [width, height]])
+                .scaleExtent([0.1, 4])
+                .on("zoom", (event) => g.attr("transform", event.transform))
+            );
+
+            const simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collide", d3.forceCollide().radius(30));
+
+            // Draw Links
+            const link = g.append("g")
+                .selectAll("line")
+                .data(links)
+                .join("line")
+                .attr("stroke", d => d.color)
+                .attr("stroke-width", d => d.type === 'global' ? 1.5 : 2.5)
+                .attr("stroke-dasharray", d => d.type === 'global' ? "5,5" : "none")
+                .attr("stroke-opacity", 0.7);
+
+            // Draw Nodes
+            const node = g.append("g")
+                .selectAll("g")
+                .data(nodes)
+                .join("g")
+                .call(drag(simulation));
+
+            node.append("circle")
+                .attr("r", d => d.radius)
+                .attr("fill", d => d.color)
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 2);
+
+            // Add Labels
+            node.append("text")
+                .attr("class", "node-label")
+                .attr("x", 15)
+                .attr("y", 4)
+                .text(d => d.label || d.id)
+                .style("fill", "#2c3e50");
+
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                node
+                    .attr("transform", d => `translate(${d.x},${d.y})`);
+            });
+
+            function drag(simulation) {
+                function dragstarted(event) {
+                    if (!event.active) simulation.alphaTarget(0.3).restart();
+                    event.subject.fx = event.subject.x;
+                    event.subject.fy = event.subject.y;
+                }
+                function dragged(event) {
+                    event.subject.fx = event.x;
+                    event.subject.fy = event.y;
+                }
+                function dragended(event) {
+                    if (!event.active) simulation.alphaTarget(0);
+                    event.subject.fx = null;
+                    event.subject.fy = null;
+                }
+                return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+            }
+        }
+    </script>
+</body>
+</html>
