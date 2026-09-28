@@ -1,21 +1,628 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools for Education & Research</title>
-    <!-- Link your CSS file or styles here -->
-    <link rel="stylesheet" href="style.css">
+    <title>Prajnan | Academic & Research Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Merriweather -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slateDark: '#0F172A',
+                        navyBlue: '#1E293B',
+                        amberGold: '#D97706',
+                        amberLight: '#F59E0B',
+                        offWhite: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: radial-gradient(circle at top right, #1E293B 0%, #0F172A 100%);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-offWhite text-slate-800 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Your tool's user interface goes here -->
-    <h1>Tools for Education & Research</h1>
-    <div id="app">
-        <!-- Your tool content, buttons, forms, etc. -->
-    </div>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-slateDark/95 backdrop-blur-md border-b border-slate-700/50 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amberGold to-amberLight flex items-center justify-center text-slateDark text-xl font-bold shadow-md">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-serif font-bold tracking-tight text-white">PRAJNAN</span>
+                        <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-amberLight font-semibold border-l border-slate-600 pl-2 ml-2">Academic Hub</span>
+                    </div>
+                </div>
 
-    <!-- Link your JavaScript file here -->
-    <script src="script.js"></script>
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#home" class="text-amberLight hover:text-white transition">Home</a>
+                    <a href="#utilities" class="text-slate-300 hover:text-amberLight transition">Tools & Utilities</a>
+                    <a href="#tools" class="text-slate-300 hover:text-amberLight transition">Research Tools</a>
+                    <a href="#publications" class="text-slate-300 hover:text-amberLight transition">Publications</a>
+                    <a href="#about" class="text-slate-300 hover:text-amberLight transition">About</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="#portal" class="bg-gradient-to-r from-amberGold to-amberLight hover:opacity-90 text-slateDark font-semibold px-5 py-2.5 rounded-lg shadow-md transition duration-200 transform hover:-translate-y-0.5 flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-right-to-bracket"></i> Access Portal
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navyBlue border-b border-slate-700 px-4 pt-2 pb-4 space-y-3">
+            <a href="#home" class="block text-amberLight font-medium">Home</a>
+            <a href="#utilities" class="block text-slate-300 hover:text-white">Tools & Utilities</a>
+            <a href="#tools" class="block text-slate-300 hover:text-white">Research Tools</a>
+            <a href="#publications" class="block text-slate-300 hover:text-white">Publications</a>
+            <a href="#about" class="block text-slate-300 hover:text-white">About</a>
+            <a href="#portal" class="block w-full text-center bg-amberGold text-slateDark font-semibold py-2 rounded-lg mt-2">Access Portal</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white relative overflow-hidden py-20 lg:py-28">
+        <!-- Background Decorative Elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-amberGold/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-amberGold/30 text-amberLight text-xs font-semibold uppercase tracking-wider mb-6">
+                    <i class="fa-solid fa-sparkles"></i> Gateway to Academic Excellence
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight tracking-tight mb-6">
+                    Empowering Scholarly Discovery & <span class="gold-gradient-text">Research Rigor</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-300 font-light mb-8 leading-relaxed">
+                    Prajnan Academic Hub brings together world-class library tools, instant citation formatting, classification references, and open-access research repositories into one unified portal.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <a href="#utilities" class="bg-gradient-to-r from-amberGold to-amberLight hover:opacity-90 text-slateDark font-semibold px-6 py-3.5 rounded-lg shadow-lg transition duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Explore Tools
+                    </a>
+                    <a href="#tools" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-medium px-6 py-3.5 rounded-lg transition duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark"></i> View Research Tools
+                    </a>
+                </div>
+
+                <!-- Statistic Badges -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8 border-t border-slate-700/60">
+                    <div class="flex items-center gap-3">
+                        <div class="text-amberGold text-2xl"><i class="fa-solid fa-database"></i></div>
+                        <div>
+                            <div class="text-xl font-bold font-serif">50+</div>
+                            <div class="text-xs text-slate-400">Research Tools</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="text-amberGold text-2xl"><i class="fa-solid fa-lock-open"></i></div>
+                        <div>
+                            <div class="text-xl font-bold font-serif">100%</div>
+                            <div class="text-xs text-slate-400">Open Access</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 col-span-2 sm:col-span-1">
+                        <div class="text-amberGold text-2xl"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <div class="text-xl font-bold font-serif">15k+</div>
+                            <div class="text-xs text-slate-400">Active Scholars</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Interactive Tools & Utilities Section -->
+    <section id="utilities" class="py-16 bg-slate-100/70 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-serif font-bold text-slateDark">Interactive Academic Utilities</h2>
+                <p class="text-slate-600 mt-2">Generate citations seamlessly and lookup Dewey Decimal Classification (DDC) call numbers instantly.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Utility 1: Citation Generator -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-navyBlue flex items-center gap-2">
+                                <i class="fa-solid fa-quote-left text-amberGold"></i> Quick Citation Generator
+                            </h3>
+                            <span class="text-xs font-semibold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full">APA 7 / MLA 9 / Chicago</span>
+                        </div>
+                        <p class="text-sm text-slate-500 mb-6">Enter source details to instantly format your academic reference.</p>
+
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input type="text" id="cite-author" placeholder="Author (e.g., Smith, J.)" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amberGold">
+                                <input type="text" id="cite-title" placeholder="Title of Work" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amberGold">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input type="text" id="cite-publisher" placeholder="Publisher / Journal" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amberGold">
+                                <input type="number" id="cite-year" placeholder="Year (e.g., 2024)" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amberGold">
+                            </div>
+
+                            <div class="flex items-center space-x-4 pt-2">
+                                <label class="text-sm font-semibold text-slate-700">Style:</label>
+                                <div class="flex gap-4 text-sm">
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="radio" name="cite-style" value="apa" checked class="text-amberGold focus:ring-amberGold">
+                                        <span class="ml-1.5 text-slate-700">APA 7</span>
+                                    </label>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="radio" name="cite-style" value="mla" class="text-amberGold focus:ring-amberGold">
+                                        <span class="ml-1.5 text-slate-700">MLA 9</span>
+                                    </label>
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="radio" name="cite-style" value="chicago" class="text-amberGold focus:ring-amberGold">
+                                        <span class="ml-1.5 text-slate-700">Chicago</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <button id="generate-cite-btn" class="w-full bg-navyBlue hover:bg-slateDark text-white font-semibold py-2.5 rounded-lg transition mb-4 text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> Format Citation
+                        </button>
+
+                        <div class="bg-slate-50 border border-slate-200 rounded-lg p-3.5 relative min-h-[60px]">
+                            <p id="cite-output" class="text-sm font-serif italic text-slate-800 pr-10">Select parameters and click format to generate citation...</p>
+                            <button id="copy-cite-btn" title="Copy to clipboard" class="absolute right-3 top-3 text-slate-400 hover:text-amberGold transition">
+                                <i class="fa-regular fa-copy text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utility 2: DDC Quick Reference Search -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-navyBlue flex items-center gap-2">
+                                <i class="fa-solid fa-barcode text-amberGold"></i> DDC Quick Reference
+                            </h3>
+                            <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full">Subject Search</span>
+                        </div>
+                        <p class="text-sm text-slate-500 mb-6">Search popular Dewey Decimal Classification codes for quick library reference.</p>
+
+                        <div class="relative mb-4">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                            <input type="text" id="ddc-search" placeholder="Type topic (e.g. Computer Science, Physics, Economics)..." class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amberGold">
+                        </div>
+
+                        <!-- Results Container -->
+                        <div id="ddc-results" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+                        <span>Updated for DDC 23 Edition</span>
+                        <a href="#tools" class="text-amberGold font-semibold hover:underline">Full Catalog <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Research Tools & Digital Services Grid -->
+    <section id="tools" class="py-20 bg-offWhite">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-amberGold font-bold">Integrated Academic Ecosystem</span>
+                    <h2 class="text-3xl font-serif font-bold text-slateDark mt-1">Featured Research Services</h2>
+                </div>
+                <p class="text-slate-500 max-w-md mt-2 md:mt-0 text-sm">Direct access to institutional databases, catalog searching, and curation utilities.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="bg-white rounded-xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                            <i class="fa-solid fa-book-open text-xl"></i>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded">OPAC Catalog</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slateDark mb-2">WebOPAC Search</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6">Search books, print journals, rare manuscripts, and physical collection holdings.</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center justify-between w-full text-sm font-semibold text-navyBlue group-hover:text-amberGold transition">
+                        <span>Launch Catalog</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 2 -->
+                <div class="bg-white rounded-xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-lg bg-amber-50 text-amberGold flex items-center justify-center text-xl mb-4 group-hover:bg-amberGold group-hover:text-white transition duration-300">
+                            <i class="fa-solid fa-box-archive text-xl"></i>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-amber-50 text-amber-800 text-xs font-semibold px-2 py-0.5 rounded">Repository</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slateDark mb-2">Digital Repositories</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6">Access institutional theses, dissertations, conference proceedings, and faculty papers.</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center justify-between w-full text-sm font-semibold text-navyBlue group-hover:text-amberGold transition">
+                        <span>Explore Repository</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 3 -->
+                <div class="bg-white rounded-xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
+                            <i class="fa-solid fa-tags text-xl"></i>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">Bibliographic</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slateDark mb-2">Citation Manager</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6">Seamless integration with EndNote, Zotero, and Mendeley file exports (.RIS / .BibTeX).</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center justify-between w-full text-sm font-semibold text-navyBlue group-hover:text-amberGold transition">
+                        <span>Export Bibliographies</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Tool Card 4 -->
+                <div class="bg-white rounded-xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition duration-300">
+                            <i class="fa-solid fa-filter text-xl"></i>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="bg-purple-50 text-purple-700 text-xs font-semibold px-2 py-0.5 rounded">Data Science</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slateDark mb-2">Dataset Filters</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6">Filter open research datasets by discipline, methodologies, license, and formats.</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center justify-between w-full text-sm font-semibold text-navyBlue group-hover:text-amberGold transition">
+                        <span>Search Datasets</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications & Resources Section -->
+    <section id="publications" class="py-20 bg-slate-100/60 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-serif font-bold text-slateDark">Publications & Research Resources</h2>
+                    <p class="text-slate-600 mt-1">Browse recent peer-reviewed publications, guides, and research materials.</p>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="flex flex-wrap gap-2 mt-4 md:mt-0" id="publication-filters">
+                    <button data-filter="all" class="filter-btn active-filter px-4 py-1.5 rounded-full text-xs font-semibold bg-navyBlue text-white shadow-sm transition">All Items</button>
+                    <button data-filter="paper" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition">Research Papers</button>
+                    <button data-filter="guide" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition">User Guides</button>
+                    <button data-filter="dataset" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition">Data Repositories</button>
+                </div>
+            </div>
+
+            <!-- Publications List Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="publications-container">
+                <!-- Card 1 -->
+                <div class="pub-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="paper">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-100 text-blue-800">Research Paper</span>
+                            <span class="text-xs text-slate-400">Oct 2026</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-slateDark text-lg mb-2 leading-snug">Quantum Computing Applications in Metadata Indexing</h3>
+                        <p class="text-xs text-slate-500 mb-3">Authors: Dr. A. Sharma, Prof. R. Vance</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">An investigation into algorithmic speedups for unstructured library data processing and semantic indexing.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-file-pdf text-red-500 mr-1"></i> PDF (2.4 MB)</span>
+                        <a href="#" class="text-xs font-bold text-amberGold hover:underline flex items-center gap-1">Download <i class="fa-solid fa-download"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="pub-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="guide">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800">User Guide</span>
+                            <span class="text-xs text-slate-400">Sep 2026</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-slateDark text-lg mb-2 leading-snug">Navigating High-Impact Peer Review Frameworks</h3>
+                        <p class="text-xs text-slate-500 mb-3">Authors: Prajnan Editorial Board</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">Step-by-step guidance for early career researchers preparing manuscripts for international academic journals.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-file-lines text-blue-500 mr-1"></i> Guide (1.1 MB)</span>
+                        <a href="#" class="text-xs font-bold text-amberGold hover:underline flex items-center gap-1">Read Online <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="pub-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="dataset">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded bg-purple-100 text-purple-800">Data Repository</span>
+                            <span class="text-xs text-slate-400">Aug 2026</span>
+                        </div>
+                        <h3 class="font-serif font-bold text-slateDark text-lg mb-2 leading-snug">Global Climate Variation Trends (2010–2025)</h3>
+                        <p class="text-xs text-slate-500 mb-3">Authors: Environmental Science Lab</p>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-3">Open-access meteorological measurement matrix formatted for Python pandas and R modeling.</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400"><i class="fa-solid fa-database text-amber-500 mr-1"></i> CSV / JSON</span>
+                        <a href="#" class="text-xs font-bold text-amberGold hover:underline flex items-center gap-1">Access Dataset <i class="fa-solid fa-database"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="bg-slateDark text-slate-300 mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Branding & Bio -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded bg-gradient-to-tr from-amberGold to-amberLight flex items-center justify-center text-slateDark font-bold">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="text-lg font-serif font-bold text-white tracking-wide">PRAJNAN</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Prajnan Academic & Research Hub is an open portal dedicated to advancing interdisciplinary scholarly inquiry, discovery tools, and digital repository access.
+                    </p>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-amberGold hover:text-slateDark text-slate-300 flex items-center justify-center transition"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-amberGold hover:text-slateDark text-slate-300 flex items-center justify-center transition"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-amberGold hover:text-slateDark text-slate-300 flex items-center justify-center transition"><i class="fa-brands fa-github text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Navigation -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#home" class="hover:text-amberLight transition">Home Portal</a></li>
+                        <li><a href="#utilities" class="hover:text-amberLight transition">Citation Builder</a></li>
+                        <li><a href="#utilities" class="hover:text-amberLight transition">DDC Search</a></li>
+                        <li><a href="#tools" class="hover:text-amberLight transition">WebOPAC Catalog</a></li>
+                        <li><a href="#publications" class="hover:text-amberLight transition">Open Access Papers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Library Info -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Library Services</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-amberLight transition">Inter-Library Loan (ILL)</a></li>
+                        <li><a href="#" class="hover:text-amberLight transition">Archival Access Requests</a></li>
+                        <li><a href="#" class="hover:text-amberLight transition">Faculty Research Support</a></li>
+                        <li><a href="#" class="hover:text-amberLight transition">Plagiarism & Integrity Checks</a></li>
+                        <li><a href="#" class="hover:text-amberLight transition">Research Data Management</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Hours -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Contact & Hours</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot text-amberGold mt-0.5"></i>
+                            <span>Central Library Building, Knowledge Campus</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-amberGold"></i>
+                            <span>research-hub@prajnan.edu</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-amberGold"></i>
+                            <span>Mon - Sat: 08:00 - 22:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Line -->
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 Prajnan Academic Hub. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-slate-400">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-400">Terms of Use</a>
+                    <a href="#" class="hover:text-slate-400">Accessibility Statement</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            /* 1. Mobile Menu Toggle */
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            /* 2. Citation Generator Logic */
+            const authorInput = document.getElementById('cite-author');
+            const titleInput = document.getElementById('cite-title');
+            const publisherInput = document.getElementById('cite-publisher');
+            const yearInput = document.getElementById('cite-year');
+            const generateBtn = document.getElementById('generate-cite-btn');
+            const citeOutput = document.getElementById('cite-output');
+            const copyBtn = document.getElementById('copy-cite-btn');
+
+            generateBtn.addEventListener('click', () => {
+                const author = authorInput.value.trim() || 'Author, A.';
+                const title = titleInput.value.trim() || 'Title of the Academic Work';
+                const publisher = publisherInput.value.trim() || 'Academic Press';
+                const year = yearInput.value.trim() || '2026';
+                const style = document.querySelector('input[name="cite-style"]:checked').value;
+
+                let citation = '';
+
+                if (style === 'apa') {
+                    citation = `${author} (${year}). ${title}. ${publisher}.`;
+                } else if (style === 'mla') {
+                    citation = `${author}. "${title}." ${publisher}, ${year}.`;
+                } else if (style === 'chicago') {
+                    citation = `${author}. ${title}. ${publisher}, ${year}.`;
+                }
+
+                citeOutput.textContent = citation;
+            });
+
+            copyBtn.addEventListener('click', () => {
+                const textToCopy = citeOutput.textContent;
+                if (!textToCopy || textToCopy.includes('Select parameters')) return;
+
+                // Fallback copy strategy for cross-browser iFrame compatibility
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-500"></i>';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fa-regular fa-copy text-lg"></i>';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(textarea);
+            });
+
+            /* 3. DDC Reference Search Logic */
+            const ddcDatabase = [
+                { code: '000', title: 'Computer Science, Information & General Works' },
+                { code: '005', title: 'Computer Programming, Programs & Data' },
+                { code: '100', title: 'Philosophy & Psychology' },
+                { code: '300', title: 'Social Sciences' },
+                { code: '330', title: 'Economics' },
+                { code: '340', title: 'Law & Legal Studies' },
+                { code: '500', title: 'Natural Sciences & Mathematics' },
+                { code: '530', title: 'Physics' },
+                { code: '540', title: 'Chemistry' },
+                { code: '570', title: 'Biology & Biological Sciences' },
+                { code: '610', title: 'Medicine & Health Sciences' },
+                { code: '620', title: 'Engineering & Applied Sciences' },
+                { code: '700', title: 'Arts & Recreation' },
+                { code: '800', title: 'Literature & Rhetoric' },
+                { code: '900', title: 'History & Geography' }
+            ];
+
+            const ddcSearchInput = document.getElementById('ddc-search');
+            const ddcResultsContainer = document.getElementById('ddc-results');
+
+            function renderDDCResults(items) {
+                ddcResultsContainer.innerHTML = '';
+                if (items.length === 0) {
+                    ddcResultsContainer.innerHTML = `<div class="text-xs text-slate-400 p-2">No matching DDC subject classification found.</div>`;
+                    return;
+                }
+                items.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-100 hover:bg-amber-50 hover:border-amber-200 transition text-xs';
+                    el.innerHTML = `
+                        <span class="font-medium text-slate-800">${item.title}</span>
+                        <span class="font-mono font-bold bg-navyBlue text-amberLight px-2 py-0.5 rounded">${item.code}</span>
+                    `;
+                    ddcResultsContainer.appendChild(el);
+                });
+            }
+
+            // Initial DDC rendering
+            renderDDCResults(ddcDatabase.slice(0, 5));
+
+            ddcSearchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (!query) {
+                    renderDDCResults(ddcDatabase.slice(0, 5));
+                    return;
+                }
+                const filtered = ddcDatabase.filter(item => 
+                    item.title.toLowerCase().includes(query) || item.code.includes(query)
+                );
+                renderDDCResults(filtered);
+            });
+
+            /* 4. Publication Filter Logic */
+            const filterButtons = document.querySelectorAll('#publication-filters .filter-btn');
+            const pubCards = document.querySelectorAll('.pub-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button state
+                    filterButtons.forEach(b => {
+                        b.classList.remove('bg-navyBlue', 'text-white');
+                        b.classList.add('bg-white', 'text-slate-700');
+                    });
+                    btn.classList.remove('bg-white', 'text-slate-700');
+                    btn.classList.add('bg-navyBlue', 'text-white');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    pubCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
